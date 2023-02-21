@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     while (wiederholen == True):
         #netzadresse_basisnetz = input("Bitte gib die Basisnetz-Adresse ein (x.x.x.x): ")
-        anz_subnetz = input("Wie viele Subnetze sind gewünscht?: ")
+        #anz_subnetz = input("Wie viele Subnetze sind gewünscht?: ")
 
         # Basisnetz-Adresse: Eingabe und Prüfung (es darf kein Text eingegeben werden.)
         validEntry = False
@@ -18,8 +18,17 @@ if __name__ == '__main__':
             else:
                 print("Fehlerhafte Eingabe")
 
+        # Anzahl der Subnetzmaske: Eingabe und Prüfung (es darf kein Text eingegeben werden.)
+        validEntry = False
+        while (validEntry == False):
+            anz_subnetz = input("Wie viele Subnetze sind gewünscht?: ")
+            if anz_subnetz.isdigit():
+                validEntry = True
+            else:
+                print("Fehlerhafte Eingabe")
+
         # Fehlermeldung bei z.B. zu vielen Netzen soll ausgegeben werden (128 subnetze (dafür keine Hosts), 64 subnetze (2 hosts))
-        # Prüfung, ob Zahl eingegeben wurde, Fehlermeldung
+
 
         anz_subnetz_as_int = int(anz_subnetz)
         netzIP = netzadresse_basisnetz.split(".")
