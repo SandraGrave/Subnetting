@@ -1,6 +1,7 @@
 import math
 import re
 
+
 # Berechnung Subnetzmaske: (selbst berechnen)
 def berechnung_subnetzmaske(log_anz_subnetz):
     subnetzmaske = 0
