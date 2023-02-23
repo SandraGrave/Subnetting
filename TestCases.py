@@ -1,13 +1,16 @@
+import builtins
 import unittest
-
+from unittest import mock
 from unittest.mock import MagicMock
 import main
 
 
 class TestCases(unittest.TestCase):
-        def test_wenn_eingabe_basisnetz_eingabe_richtig_dann_gebe_netzadresse_basisnetz_zurueck(self): # Eingabe muss gemockt werden?
-            main.eingabe_basisnetz() = MagicMock(return_value = "1.2.3.0")
-            self.assertEqual(main.eingabe_basisnetz(), "1.2.3.0")
+    def test_wenn_eingabe_basisnetz_eingabe_richtig_dann_gebe_netzadresse_basisnetz_zurueck(self):
+        with mock.patch('builtins.input', return_value="1.2.3.0"):
+            assert main.eingabe_basisnetz() == "1.2.3.0"
+
+
 
 
     #def test_eingabe_basisnetz_eingabe_falsch(self):
