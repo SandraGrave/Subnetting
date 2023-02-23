@@ -35,12 +35,12 @@ def teile_netzip_als_array(netzadresse_basisnetz):
     return netzadresse_basisnetz.split(".")
 
 
-# Wie viele Bits vom Host-Part müssen wir für den Netzwerkbereich klauen?
+# Wie viele Bits vom Host-Part müssen wir für den Netzwerkbereich klauen, um die SUbnetze erstellen zu können?
 def berechne_bits_aus_hostpart(anz_subnetz_as_int):
     return math.log2(anz_subnetz_as_int)
 
 
-  # Wie viele Subnetze müssen erstellt werden?
+# Wie viele Subnetze müssen erstellt werden?
 def berechnung_anz_subnetze(log_anz_subnetz):
     if (log_anz_subnetz % 1) != 0:
         return int(log_anz_subnetz) + 1
