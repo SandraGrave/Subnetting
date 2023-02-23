@@ -16,6 +16,7 @@ def eingabe_basisnetz():
 
 
 # Anzahl der Subnetzmaske: Eingabe und Prüfung (es darf kein Text eingegeben werden und nicht zu HOhe Anzahl der Subnetze)
+# Fehlermeldung bei z.B. zu vielen Netzen soll ausgegeben werden (128 subnetze (dafür keine Hosts, macht keinen Sinn), 64 subnetze (2 hosts))
 def eingabe_anz_subnetzmaske():
     validEntry = False
     while (validEntry == False):
@@ -28,7 +29,7 @@ def eingabe_anz_subnetzmaske():
             print("Fehlerhafte Eingabe")
     return int(anz_subnetz)
 
-# Fehlermeldung bei z.B. zu vielen Netzen soll ausgegeben werden (128 subnetze (dafür keine Hosts), 64 subnetze (2 hosts))
+
 
 def teile_netzip_als_array(netzadresse_basisnetz):
     return netzadresse_basisnetz.split(".")
