@@ -21,10 +21,10 @@ def eingabe_anz_subnetzmaske():
     validEntry = False
     while (validEntry == False):
         anz_subnetz = input("Wie viele Subnetze sind gewünscht?: ")
-        if anz_subnetz.isdigit() and int(anz_subnetz) <= 64:  # Prüfung, ob int
-            validEntry = True
-        if int(anz_subnetz) > 64:
-            print("Bei so vielen Subnetzen können keine Host-Adressen mehr vergeben werden. Bitte gib eine geringere Subnetz-Anzahl an")
+        if anz_subnetz.isdigit():  # Prüfung, ob int
+            if int(anz_subnetz) > 64:
+                print("Bei so vielen Subnetzen können keine Host-Adressen mehr vergeben werden. Bitte gib eine geringere Subnetz-Anzahl an")
+            else: validEntry = True
         else:
             print("Fehlerhafte Eingabe")
     return int(anz_subnetz)
