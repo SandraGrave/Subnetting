@@ -80,7 +80,7 @@ def ausgabe_netzwerk_broadcast(anz_subnetz, netzIP, host_anz_subnetz):
             (int(netzIP[3]) + (i + 1) * host_anz_subnetz) - 1))
         print()
 
-def erneute_berechnung_abfrage(wiederholen):
+def erneute_berechnung_abfrage():
     erneute_berechnung = input("Erneute Berechnung erwünscht? (Ja/Nein): ")
     if erneute_berechnung == "Ja":
         return True
@@ -105,7 +105,7 @@ if __name__ == '__main__':
         ausgabe_anz_host(anz_hosts)
         ausgabe_subnetzmaske(log_anz_subnetz)
         ausgabe_netzwerk_broadcast(anz_subnetz, netzIP, anz_hosts + 2)
-        wiederholen = erneute_berechnung_abfrage(wiederholen)
+        wiederholen = erneute_berechnung_abfrage()
 
 
 # später?
