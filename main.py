@@ -55,8 +55,7 @@ def berechnung_anz_host(log_anz_subnetz):
 
 
 def ausgabe_anz_host(anz_hosts):
-    print()
-    print("Anzahl der Hosts im jeweiligen Subnetz: " + str(anz_hosts))
+    print("\n" + "Anzahl der Hosts im jeweiligen Subnetz: " + str(anz_hosts))
 
 
 
@@ -81,7 +80,7 @@ def ausgabe_netzwerk_broadcast(anz_subnetz, netzIP, host_anz_subnetz):
             (int(netzIP[3]) + (i + 1) * host_anz_subnetz) - 1))
         print()
 
-def erneute_berechnung_abfrage():
+def erneute_berechnung_abfrage(wiederholen):
     erneute_berechnung = input("Erneute Berechnung erwünscht? (Ja/Nein): ")
     if erneute_berechnung == "Ja":
         return True
@@ -106,7 +105,7 @@ if __name__ == '__main__':
         ausgabe_anz_host(anz_hosts)
         ausgabe_subnetzmaske(log_anz_subnetz)
         ausgabe_netzwerk_broadcast(anz_subnetz, netzIP, anz_hosts + 2)
-        wiederholen = erneute_berechnung_abfrage()
+        wiederholen = erneute_berechnung_abfrage(wiederholen)
 
 
 # später?
