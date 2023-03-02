@@ -55,8 +55,7 @@ def berechnung_anz_host(log_anz_subnetz):
 
 
 def ausgabe_anz_host(anz_hosts):
-    print()
-    print("Anzahl der Hosts im jeweiligen Subnetz: " + str(anz_hosts))
+    print("\nAnzahl der Hosts pro Subnetz: " + str(anz_hosts))
 
 
 
@@ -68,17 +67,15 @@ def berechnung_subnetzmaske(log_anz_subnetz):
     return str(subnetzmaske)
 
 def ausgabe_subnetzmaske(log_anz_subnetz):
-    print("Subnetzmaske: 255.255.255." + berechnung_subnetzmaske(log_anz_subnetz))
-    print()
+    print("Subnetzmaske: 255.255.255." + berechnung_subnetzmaske(log_anz_subnetz) + "\n")
 
-
-def ausgabe_netzwerk_broadcast(anz_subnetz, netzIP, host_anz_subnetz):
+def ausgabe_netzwerk_broadcast(anz_subnetz, netz_ip, host_anz_subnetz):
     for i in range(0, int(anz_subnetz)):
         print(str(i + 1) + ". Subnetz:")
-        print("Netzwerkadresse: " + str(netzIP[0]) + "." + str(netzIP[1]) + "." + str(netzIP[2]) + "." + str(
-            int(netzIP[3]) + i * host_anz_subnetz))
-        print("Broadcastadresse: " + str(netzIP[0]) + "." + str(netzIP[1]) + "." + str(netzIP[2]) + "." + str(
-            (int(netzIP[3]) + (i + 1) * host_anz_subnetz) - 1))
+        print("Netzwerkadresse: " + str(netz_ip[0]) + "." + str(netz_ip[1]) + "." + str(netz_ip[2]) + "." + str(
+            int(netz_ip[3]) + i * host_anz_subnetz))
+        print("Broadcastadresse: " + str(netz_ip[0]) + "." + str(netz_ip[1]) + "." + str(netz_ip[2]) + "." + str(
+            (int(netz_ip[3]) + (i + 1) * host_anz_subnetz) - 1))
         print()
 
 def erneute_berechnung_abfrage():
