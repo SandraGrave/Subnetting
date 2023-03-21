@@ -75,11 +75,11 @@ def ausgabe_anz_host(anz_hosts):
 
 
 
-def berechnung_subnetzmaske(log_anz_subnetz, freie_bits_hostpart):
+def berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart):
     subnetzmaske = 0
-    for i in range(0, 32 - freie_bits_hostpart):   # 32 Bits - erstes Oktett = 24
+    for i in range(0, 32 - freie_bits_hostpart):
         subnetzmaske = subnetzmaske + (1 << (32-i-1))
-    for i in range(0, log_anz_subnetz):
+    for i in range(0, anz_bits_subnetzpart):
         subnetzmaske = subnetzmaske + (1 << (freie_bits_hostpart - i - 1))         # da wir das erste Bit schon festgelegt haben, müssen wir 1 abziehen. Da wir bei 0 anfangen zu zählen
     return subnetzmaske
 
@@ -102,14 +102,14 @@ def umwandlung_subnetzmaske_zu_int_32(netz_ip):  # netz_ip wird in 32er-Bit-Int 
     return netz_ip_as_int
 
 
-def berechnung_netzwerk_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part):
+def berechnung_netzwerk_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part, anz_subnetz):
     temp_netzwerkadresse = netz_ip_netzwerkteil + (aktueller_durchlauf << (beginn_host_part - (math.ceil(berechne_bits_aus_hostpart(anz_subnetz)))))
     netzwerkadresse = str((temp_netzwerkadresse & 0b11111111000000000000000000000000) >> 24) + "." + str(
         (temp_netzwerkadresse & 0b111111110000000000000000) >> 16) + "." + str(
         (temp_netzwerkadresse & 0b1111111100000000) >> 8) + "." + str((temp_netzwerkadresse & 0b11111111))
     return netzwerkadresse
 
-def berechnung_broadcast_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part):
+def berechnung_broadcast_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part, anz_subnetz):
     temp_broadcastadresse = netz_ip_netzwerkteil + ((aktueller_durchlauf + 1) << (beginn_host_part - (math.ceil(berechne_bits_aus_hostpart(anz_subnetz))))) - 1
     broadcastadresse = str((temp_broadcastadresse & 0b11111111000000000000000000000000) >> 24) + "." + str(
         (temp_broadcastadresse & 0b111111110000000000000000) >> 16) + "." + str(
@@ -128,12 +128,13 @@ def berechnung_netzwerk_broadcast(anz_subnetz, netz_ip_as_int, freie_bits_hostpa
     broadcastadressen_liste = []
 
     bitmaske_netzwerkpart = erstelle_bitmaske_netzwerkpart(freie_bits_hostpart)
-    netz_ip_netzwerkteil = netz_ip_as_int & bitmaske_netzwerkpart            # & bitwise and, Netzwerkpart, wo überlappen sich die 1en
+    #print("Bitmaske: " + str(bitmaske_netzwerkpart)
+    netz_ip_netzwerkteil = netz_ip_as_int & bitmaske_netzwerkpart            # & heißt bitwise and, Netzwerkpart, wo überlappen sich die 1en
 
     for aktueller_durchlauf in range(0, anz_subnetz):                        #
-        netzwerkadresse = berechnung_netzwerk_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part)
+        netzwerkadresse = berechnung_netzwerk_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part, anz_subnetz)
         netzwerkadressen_liste.append(netzwerkadresse)
-        broadcastadresse = berechnung_broadcast_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part)
+        broadcastadresse = berechnung_broadcast_adresse(aktueller_durchlauf, netz_ip_netzwerkteil, beginn_host_part, anz_subnetz)
         broadcastadressen_liste.append(broadcastadresse)
     return [netzwerkadressen_liste, broadcastadressen_liste]
 
