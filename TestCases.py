@@ -140,26 +140,42 @@ class TestCases(unittest.TestCase):
     def test_wenn_berechnung_subnetzmaske_mit_22_freien_und_6_belegten_stellen_gebe_subnetz_maske_zurueck(self):
         anz_bits_subnetzpart = 6
         freie_bits_hostpart = 22
-        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111111111110000000000000000)   # = 1111 1111 0000 0000 0000 0000
+        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111111111110000000000000000)   # = 11111111 11111111 00000000 00000000
 
     def test_wenn_berechnung_subnetzmaske_mit_0_freien_und_0_belegten_stellen_gebe_subnetz_maske_zurueck(self): # = 24 Stellen für Netzwerk-Part zur Verfügung, davon 0 Stellen für Hostpart frei
         anz_bits_subnetzpart = 0
         freie_bits_hostpart = 0
-        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111111111111111111111111111)   # = 1111 1111 1111 1111 1111 1111
+        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111111111111111111111111111)   # = 11111111 11111111 11111111 11111111
 
     def test_wenn_berechnung_subnetzmaske_mit_24_freien_und_24_belegten_stellen_gebe_subnetz_maske_zurueck(self):
         anz_bits_subnetzpart = 24
         freie_bits_hostpart = 24
-        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111111111111111111111111111)   # = 1111 1111 1111 1111 1111 1111
+        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111111111111111111111111111)   # = 11111111 11111111 11111111 11111111
 
     def test_wenn_berechnung_subnetzmaske_mit_24_ferien_und_0_belegten_stellen_gebe_subnetz_maske_zurueck(self):
         anz_bits_subnetzpart = 0
         freie_bits_hostpart = 24
-        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111000000000000000000000000)   # = 0000 0000 0000 0000 0000 0000
+        self.assertEqual(main.berechnung_subnetzmaske(anz_bits_subnetzpart, freie_bits_hostpart), 0b11111111000000000000000000000000)   # = 11111111 00000000 00000000 00000000
 
-    #def test_ausgabe_subnetzmaske(subnetzmaske_as_string):
-    #def test_umwandlung_subnetzmaske_zu_int_32(netz_ip):
-    #def erstelle_bitmaske_netzwerkpart(host_anz_subnetz):  # Anzahl der Bits für Netzwerkpart, 1en werden gesetzt
+    def test_umwandlung_int_32_zu_subnetzmaske(self):
+        subnetzmaske = 0b11111111000000000000000000000000           # = 11111111 00000000 00000000 00000000
+        self.assertEqual(main.umwandlung_int_32_zu_subnetzmaske(subnetzmaske), "255.0.0.0")
+
+
+    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
+    def test_wenn_ausgabe_subnetzmaske_gebe_subnetzmaske_mit_einleitungssatz_aus(self, mock_stdout):
+        subnetzmaske_as_string = "255.255.255.0"
+        main.ausgabe_subnetzmaske(subnetzmaske_as_string)
+        self.assertEqual("Subnetzmaske: 255.255.255.0\n\n", mock_stdout.getvalue())
+
+    def test_umwandlung_subnetzmaske_zu_int_32(self):
+        netz_ip =['255', '255', '128', '0']
+        self.assertEqual(main.umwandlung_subnetzmaske_zu_int_32(netz_ip), 0b11111111111111111000000000000000)   # = 11111111 11111111 10000000 00000000
+
+
+    def test_erstelle_bitmaske_netzwerkpart(self):  # Anzahl der Bits für Netzwerkpart, 1en werden gesetzt
+        freie_bits_hostpart = 8
+        self.assertEqual(main.erstelle_bitmaske_netzwerkpart(freie_bits_hostpart), 0b11111111111111111111111100000000)  # = 11111111 1111111 111111111 00000000
 
 
     def test_berechnung_netzwerk_broadcast(self):
