@@ -104,8 +104,3 @@ if __name__ == '__main__':
         ausgabe_subnetzmaske(log_anz_subnetz)
         ausgabe_netzwerk_broadcast(anz_subnetz, netzIP, anz_hosts + 2)
         wiederholen = erneute_berechnung_abfrage()
-
-+ "." + zweites_oktett_binaer_final + "." + drittes_oktett_binaer_final + "." + viertes_oktett_binaer_final)
-        # ich brauche min 2 IP-Adressen und kann dann vergleichen, in welchem Subnetz sie sein müssen?
-        # Nullen zählen count()?
-        # print(subnetzmaske
