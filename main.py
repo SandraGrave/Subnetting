@@ -93,7 +93,7 @@ def ausgabe_subnetzmaske(subnetzmaske_as_string):
     print("Subnetzmaske: " + subnetzmaske_as_string + "\n")
 
 
-def umwandlung_subnetzmaske_zu_int_32(netz_ip):  # netz_ip wird in 32er-Bit-Int umgewandelt
+def umwandlung_subnetzmaske_zu_int_32(netz_ip): # netz_ip wird in 32er-Bit-Int umgewandelt
     int_first_part = int(netz_ip[0]) << 24                                   # 11111111000000000000000000000000
     int_second_part = int(netz_ip[1]) << 16                                  # 00000000111111110000000000000000
     int_third_part = int(netz_ip[2]) << 8                                    # 00000000000000001111111100000000
