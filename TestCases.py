@@ -36,27 +36,27 @@ class TestCases(unittest.TestCase):
     def test_wenn_eingabe_anz_subnetzmaske_richtig_dann_return_anz_subnetz(self):
         with mock.patch('builtins.input',  return_value="50"):
             freie_subnetz_stellen = 8
-            assert main.eingabe_anz_subnetzmaske(freie_subnetz_stellen) <= 256
+            assert main.eingabe_anz_subnetz(freie_subnetz_stellen) <= 256
 
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_wenn_eingabe_anz_subnetzmaske_groeßer_als_moeglich_dann_gib_fehlermeldung_aus(self, mock_stdout):
         with mock.patch('builtins.input', side_effect=["265", "64"]):                                    # wird sonst endlos ausgeführt, daher noch eine gültige Eingabe
             freie_subnetz_stellen = 8
-            main.eingabe_anz_subnetzmaske(freie_subnetz_stellen)
+            main.eingabe_anz_subnetz(freie_subnetz_stellen)
             self.assertEqual(mock_stdout.getvalue(), "Bei so vielen Subnetzen können keine Host-Adressen mehr vergeben werden. Bitte gib eine geringere Subnetz-Anzahl an, das Maximum an möglichen Netzen ist: 256\n")
 
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_wenn_eingabe_anz_subnetzmaske_kleiner_als_moeglich_dann_gib_fehlermeldung_aus(self, mock_stdout):
         with mock.patch('builtins.input', side_effect=["0", "64"]):                                     # wird sonst endlos ausgeführt, daher noch eine gültige Eingabe
             freie_subnetz_stellen = 8
-            main.eingabe_anz_subnetzmaske(freie_subnetz_stellen)
+            main.eingabe_anz_subnetz(freie_subnetz_stellen)
             self.assertEqual(mock_stdout.getvalue(), "Bitte gib keine Zahl unter 2 oder negativen Zahlen ein\n")
 
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_wenn_eingabe_anz_subnetzmaske_kein_int_dann_gib_fehlermeldung_aus(self, mock_stdout):
         with mock.patch('builtins.input', side_effect=["ungültige Eingabe, die keine Zahl ist", "64"]): # wird sonst endlos ausgeführt, daher noch eine gültige Eingabe
             freie_subnetz_stellen = 8
-            main.eingabe_anz_subnetzmaske(freie_subnetz_stellen)
+            main.eingabe_anz_subnetz(freie_subnetz_stellen)
             self.assertEqual(mock_stdout.getvalue(), "Fehlerhafte Eingabe\n")
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -172,8 +172,8 @@ class TestCases(unittest.TestCase):
         subnetzmaske = 0b11111111111111111111111111111111           # = 11111111 11111111 11111111 11111111
         self.assertEqual(main.umwandlung_int_32_zu_subnetzmaske(subnetzmaske), "255.255.255.255")
 
-    def test_wenn_umwandlung_int_32_zu_subnetzmaske_eingabe_keine_32_bit_zahl_gebe_fehler(self): # 34 Bit-Binär-Zahl läuft durch, sollte doch eigentlich nicht?
-        subnetzmaske = 0b1111111111111111111111111111111111           # = 11111111 11111111 11111111 11111111
+    def test_wenn_umwandlung_int_32_zu_subnetzmaske_eingabe_keine_32_bit_zahl_gebe_fehler(self): # 34 Bit-Binär-Zahl läuft durch, da nur die letzten 32 bit relevant für den Code sind
+        subnetzmaske = 0b100111111111111111111111111111111111           # = 11111111 11111111 11111111 11111111
         self.assertEqual(main.umwandlung_int_32_zu_subnetzmaske(subnetzmaske), "255.255.255.255")
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

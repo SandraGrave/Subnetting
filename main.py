@@ -2,8 +2,11 @@ import math
 import re
 
 
-# Basisnetz-Adresse: Eingabe und Prüfung (es darf kein Text eingegeben werden.)
-def eingabe_basisnetz():
+
+# valdiere, ob mit Punkten eingegeben wurde
+# jedes array <= 255 UND <0 sein
+# und ob 4 Array-Stellen (Listen)
+def eingabe_basisnetz():    # Basisnetz-Adresse: Eingabe und Prüfung (es darf kein Text eingegeben werden.)
     validEntry = False
     while (validEntry == False):
         netzadresse_basisnetz = input("Bitte gib die Basisnetz-Adresse ein (x.x.x.x): ")
@@ -22,12 +25,12 @@ def eingabe_der_subnetz_maske():  # min 8, max 30
     return 32-eingegebener_wert
 
 
-# Anzahl der Subnetzmaske: Eingabe und Prüfung (es darf kein Text eingegeben werden und nicht zu HOhe Anzahl der Subnetze)
-# Fehlermeldung bei z.B. zu vielen Netzen soll ausgegeben werden (128 subnetze (dafür keine Hosts, macht keinen Sinn), 64 subnetze (2 hosts))
-def eingabe_anz_subnetzmaske(freie_subnetz_stellen):    # negative Zahlen Fehlermeldung fehlt noch
-    eingegebener_wert = validiere_zahl_zwischen(2, pow(2, (freie_subnetz_stellen)), "Bitte gib keine Zahl unter 2 oder negativen Zahlen ein",
+# Anzahl der Subnetze: Eingabe und Prüfung (es darf kein Text eingegeben werden und nicht zu Hohe Anzahl der Subnetze)
+def eingabe_anz_subnetz(freie_subnetz_stellen):    # negative Zahlen Fehlermeldung fehlt noch
+    reservierte_stellen = 2
+    eingegebener_wert = validiere_zahl_zwischen(2, pow(2, (freie_subnetz_stellen-reservierte_stellen)), "Bitte gib keine Zahl unter 2 oder negativen Zahlen ein",
                                                 "Bei so vielen Subnetzen können keine Host-Adressen mehr vergeben werden. Bitte gib eine geringere Subnetz-Anzahl an, das Maximum an möglichen Netzen ist: " + str(pow(2, (freie_subnetz_stellen))),
-                                                "Wie viele Subnetze sind gewünscht? (min 2, max " + str(pow(2, (freie_subnetz_stellen))) + "): ")
+                                                "Wie viele Subnetze sind gewünscht? (min 2, max " + str(pow(2, (freie_subnetz_stellen-reservierte_stellen))) + "): ")
 
     return eingegebener_wert
 
@@ -56,7 +59,7 @@ def berechne_bits_aus_hostpart(anz_subnetz_as_int):
     return math.log2(anz_subnetz_as_int)
 
 
-# Wie viele Subnetze müssen erstellt werden?
+# Wie viele Subnetze müssen erstellt werden? /z. B. bei 3 gewünschten, müssen 4 erstellt werden
 def berechnung_anz_subnetze(anz_bits_subnetzpart):
     if (anz_bits_subnetzpart % 1) != 0:
         return int(anz_bits_subnetzpart) + 1
@@ -128,7 +131,6 @@ def berechnung_netzwerk_broadcast(anz_subnetz, netz_ip_as_int, freie_bits_hostpa
     broadcastadressen_liste = []
 
     bitmaske_netzwerkpart = erstelle_bitmaske_netzwerkpart(freie_bits_hostpart)
-    #print("Bitmaske: " + str(bitmaske_netzwerkpart)
     netz_ip_netzwerkteil = netz_ip_as_int & bitmaske_netzwerkpart            # & heißt bitwise and, Netzwerkpart, wo überlappen sich die 1en
 
     for aktueller_durchlauf in range(0, anz_subnetz):                        #
@@ -163,7 +165,7 @@ if __name__ == '__main__':
 
         netzadresse_basisnetz = eingabe_basisnetz()
         freie_bits_hostpart = eingabe_der_subnetz_maske()
-        anz_subnetz = eingabe_anz_subnetzmaske(freie_bits_hostpart)
+        anz_subnetz = eingabe_anz_subnetz(freie_bits_hostpart)
         netz_ip = teile_netzip_als_array(netzadresse_basisnetz)
         anz_bits_host_part = berechne_bits_aus_hostpart(anz_subnetz)
         anz_bits_subnetzpart = berechnung_anz_subnetze(anz_bits_host_part)
